@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block title %}Gorgumu Wallet - Request Loan{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-4">
+    <h2 class="mb-4">Request Loan</h2>
+    
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body p-4">
+                    <h5 class="card-title mb-4">Loan Request Form</h5>
+                    
+                    <form method="POST" action="{{ url_for('loan') }}">
+                        <div class="mb-3">
+                            <label for="amount" class="form-label">Loan Amount (GRM)</label>
+                            <input type="number" class="form-control" id="amount" name="amount" step="1" min="1" placeholder="0" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="interest" class="form-label">Interest Rate</label>
+                            <input type="text" class="form-control" id="interest" value="5%" disabled>
+                            <div class="form-text">
+                                Current interest rate is 5% (default rate).
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="repayment" class="form-label">Repayment Period</label>
+                            <input type="text" class="form-control" id="repayment" value="120 days" disabled>
+                            <div class="form-text">
+                                Loans must be repaid within 120 days.
+                            </div>
+                        </div>
+                        
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">Request Loan</button>
+                        </div>
+                        
+                        <div class="alert alert-warning mt-3">
+                            <i class="fas fa-exclamation-triangle"></i> <strong>Important:</strong>
+                            <ul class="mb-0">
+                                <li>You must have completed at least 20 transactions to be eligible for a loan.</li>
+                                <li>If the loan is not repaid by the due date, your data may be encrypted as per the terms.</li>
+                                <li>Your iScore will be affected by loan repayment behavior.</li>
+                            </ul>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body p-4">
+                    <h5 class="card-title mb-4">Loan Information</h5>
+                    
+                    <div class="mb-4">
+                        <h6>Financial Algorithm</h6>
+                        <p>The Gorgumu loan system uses a fractional reserve system with several financial algorithms:</p>
+                        <ul>
+                            <li><strong>Nominal Interest:</strong> principal amount * interest rate * time</li>
+                            <li><strong>Real Interest:</strong> nominal interest - inflation</li>
+                            <li><strong>Inflation:</strong> sum of the rate exchange prices</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h6>Loan Types</h6>
+                        <p>The current loan type is <strong>Ninja</strong>.</p>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h6>iScore Range</h6>
+                        <p>Your iScore can range from 400 to 850 points and affects your loan eligibility.</p>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h6>Interest Rate Changes</h6>
+                        <p>Interest rates may rise when inflation increases and fall during deflation.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

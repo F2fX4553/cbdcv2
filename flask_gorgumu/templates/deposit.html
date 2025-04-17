@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+
+{% block title %}Gorgumu Wallet - Deposit{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-4">
+    <h2 class="mb-4">Deposit GRM</h2>
+    
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body p-4">
+                    <h5 class="card-title mb-4">Deposit Form</h5>
+                    
+                    <form method="POST" action="{{ url_for('deposit') }}">
+                        <div class="mb-3">
+                            <label for="amount" class="form-label">Amount (GRM)</label>
+                            <input type="number" class="form-control" id="amount" name="amount" step="0.0001" min="0.0001" placeholder="0.0000" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="payment_method" class="form-label">Payment Method</label>
+                            <select class="form-select" id="payment_method" name="payment_method" required>
+                                <option value="" selected disabled>Select a payment method</option>
+                                <option value="bank_transfer">Bank Transfer</option>
+                                <option value="credit_card">Credit Card</option>
+                                <option value="crypto">Cryptocurrency</option>
+                            </select>
+                        </div>
+                        
+                        <div id="bank_transfer_details" class="payment-details mb-3 d-none">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="card-title">Bank Transfer Details</h6>
+                                    <p class="mb-1"><strong>Bank Name:</strong> Gorgumu Central Bank</p>
+                                    <p class="mb-1"><strong>Account Number:</strong> 1234567890</p>
+                                    <p class="mb-1"><strong>Reference:</strong> Your wallet address</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="credit_card_details" class="payment-details mb-3 d-none">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="card-title">Credit Card Details</h6>
+                                    <div class="mb-3">
+                                        <label for="card_number" class="form-label">Card Number</label>
+                                        <input type="text" class="form-control" id="card_number" placeholder="XXXX XXXX XXXX XXXX">
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="expiry_date" class="form-label">Expiry Date</label>
+                                            <input type="text" class="form-control" id="expiry_date" placeholder="MM/YY">
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="cvv" class="form-label">CVV</label>
+                                            <input type="text" class="form-control" id="cvv" placeholder="XXX">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="crypto_details" class="payment-details mb-3 d-none">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="card-title">Cryptocurrency Details</h6>
+                                    <p>Please send the equivalent amount to the following address:</p>
+                                    <p class="text-break mb-2">bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh</p>
+                                    <p>After sending, please enter the transaction hash below:</p>
+                                    <div class="mb-3">
+                                        <label for="tx_hash" class="form-label">Transaction Hash</label>
+                                        <input type="text" class="form-control" id="tx_hash">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">Deposit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body p-4">
+                    <h5 class="card-title mb-4">Deposit History</h5>
+                    
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Amount</th>
+                                    <th>Method</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- This would be populated with actual deposit history -->
+                                <tr>
+                                    <td colspan="4" class="text-center">No deposit history found</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card shadow-sm mt-4">
+                <div class="card-body p-4">
+                    <h5 class="card-title mb-3">Deposit Information</h5>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item bg-transparent">Deposits are typically processed within 24 hours</li>
+                        <li class="list-group-item bg-transparent">Minimum deposit amount: 0.001 GRM</li>
+                        <li class="list-group-item bg-transparent">Maximum deposit amount: 1,000,000 GRM</li>
+                        <li class="list-group-item bg-transparent">No deposit fees for amounts over 100 GRM</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.getElementById('payment_method').addEventListener('change', function() {
+        // Hide all payment details sections first
+        document.querySelectorAll('.payment-details').forEach(function(element) {
+            element.classList.add('d-none');
+        });
+        
+        // Show the selected payment method details
+        const selectedMethod = this.value;
+        if (selectedMethod) {
+            document.getElementById(selectedMethod + '_details').classList.remove('d-none');
+        }
+    });
+</script>
+{% endblock %} 

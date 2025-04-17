@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}Gorgumu CBDC - The Future of Money{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <h1>Welcome to Gorgumu</h1>
+            <h3>The Central Bank Digital Currency</h3>
+            <p class="lead">Gorgumu is a centralized cryptocurrency project symbolized by "GRM" that aims to be the global currency for trading.</p>
+            <p>It is a cryptocurrency that clients trade via a digital wallet. The wallet allows you to send and receive transactions and request digital loans. Join now to be part of the future of finance.</p>
+            <div class="mt-4">
+                <a href="{{ url_for('signup') }}" class="btn btn-primary btn-lg me-2">Create Wallet</a>
+                <a href="{{ url_for('login') }}" class="btn btn-outline-primary btn-lg">Login</a>
+            </div>
+        </div>
+        <div class="col-md-6 text-center">
+            <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Gorgumu Logo" class="img-fluid" style="max-width: 300px;">
+        </div>
+    </div>
+    
+    <div class="row mt-5">
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <i class="fas fa-shield-alt fa-3x mb-3 text-primary"></i>
+                    <h5 class="card-title">Secure</h5>
+                    <p class="card-text">Uses multiple encryption algorithms like RSA, AES, ECDSA, SHA256, and RIPEMD160 to ensure maximum security.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <i class="fas fa-money-bill-wave fa-3x mb-3 text-primary"></i>
+                    <h5 class="card-title">Digital Loans</h5>
+                    <p class="card-text">Request digital loans directly from the wallet after completing at least 20 transactions.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <i class="fas fa-university fa-3x mb-3 text-primary"></i>
+                    <h5 class="card-title">Fractional Reserve</h5>
+                    <p class="card-text">Built on a fractional reserve system with algorithms for nominal interest, real interest, and inflation calculation.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

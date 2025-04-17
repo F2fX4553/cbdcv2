@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %}Gorgumu Wallet - Receive GRM{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-4">
+    <h2 class="mb-4">Receive GRM</h2>
+    
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body p-4 text-center">
+                    <h5 class="card-title mb-4">Your Wallet Address</h5>
+                    
+                    <div class="mb-4">
+                        <img src="data:image/png;base64,{{ qr_img_data }}" alt="Wallet QR Code" class="img-fluid" style="max-width: 250px;">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="wallet-address" value="{{ address }}" readonly>
+                            <button class="btn btn-outline-primary" type="button" onclick="copyToClipboard()">
+                                <i class="fas fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle"></i> Share this address with others to receive GRM payments.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    function copyToClipboard() {
+        var copyText = document.getElementById("wallet-address");
+        copyText.select();
+        copyText.setSelectionRange(0, 99999);
+        navigator.clipboard.writeText(copyText.value);
+        
+        // Show temporary success message
+        var button = document.querySelector("button");
+        var originalText = button.innerHTML;
+        button.innerHTML = '<i class="fas fa-check"></i> Copied!';
+        
+        setTimeout(function() {
+            button.innerHTML = originalText;
+        }, 2000);
+    }
+</script>
+{% endblock %} 

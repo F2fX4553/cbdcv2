@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+
+{% block title %}Gorgumu Wallet - Transaction History{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-4">
+    <h2 class="mb-4">Transaction History</h2>
+    
+    <div class="card shadow-sm">
+        <div class="card-body p-4">
+            <div class="table-responsive">
+                <table class="table table-hover" id="transaction-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Transaction Hash</th>
+                            <th>Sender</th>
+                            <th>Receiver</th>
+                            <th>Amount (GRM)</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if transactions %}
+                            {% for tx in transactions %}
+                            <tr>
+                                <td>{{ tx.datetime }}</td>
+                                <td>
+                                    <span class="d-inline-block text-truncate" style="max-width: 150px;">
+                                        {{ tx.hash }}
+                                    </span>
+                                    <button class="btn btn-sm btn-outline-secondary" onclick="copyToClipboard('{{ tx.hash }}')">
+                                        <i class="fas fa-copy"></i>
+                                    </button>
+                                </td>
+                                <td>
+                                    {% if tx.sender == address %}
+                                        <span class="text-danger">You</span>
+                                    {% else %}
+                                        <span class="d-inline-block text-truncate" style="max-width: 100px;">
+                                            {{ tx.sender }}
+                                        </span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if tx.receiver == address %}
+                                        <span class="text-success">You</span>
+                                    {% else %}
+                                        <span class="d-inline-block text-truncate" style="max-width: 100px;">
+                                            {{ tx.receiver }}
+                                        </span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if tx.sender == address %}
+                                        <span class="text-danger">-{{ tx.amount }}</span>
+                                    {% else %}
+                                        <span class="text-success">+{{ tx.amount }}</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <span class="badge bg-success">Confirmed</span>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="6" class="text-center">No transactions found</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+            
+            {% if transactions|length > 10 %}
+            <nav aria-label="Transaction pagination" class="mt-4">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                    </li>
+                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                </ul>
+            </nav>
+            {% endif %}
+        </div>
+    </div>
+    
+    <!-- Export Options -->
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <div class="card shadow-sm">
+                <div class="card-body p-4">
+                    <h5 class="card-title">Export Options</h5>
+                    <p>Download your transaction history in different formats:</p>
+                    <button class="btn btn-outline-primary me-2">
+                        <i class="fas fa-file-csv"></i> CSV
+                    </button>
+                    <button class="btn btn-outline-primary me-2">
+                        <i class="fas fa-file-excel"></i> Excel
+                    </button>
+                    <button class="btn btn-outline-primary">
+                        <i class="fas fa-file-pdf"></i> PDF
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    function copyToClipboard(text) {
+        navigator.clipboard.writeText(text).then(function() {
+            alert('Copied to clipboard!');
+        }, function() {
+            alert('Failed to copy text');
+        });
+    }
+</script>
+{% endblock %} 
